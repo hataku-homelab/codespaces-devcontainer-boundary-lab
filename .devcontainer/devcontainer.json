@@ -1,8 +1,8 @@
 {
-  "name": "jupyter-boundary-lab",
+  "name": "cap127-jupyter-validation",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
     "ghcr.io/devcontainers/features/sshd:1": {}
   },
-  "postCreateCommand": "echo DEVCONTAINER_READY_MARKER_20260706"
+  "postCreateCommand": "set -eux; sudo apt-get update; sudo apt-get install -y python3 python3-pip python3-venv libcap2-bin; sudo python3 -m pip install --break-system-packages jupyterlab; sudo setcap cap_net_bind_service=+ep /usr/bin/python3.12; mkdir -p /home/vscode/.jupyter; cat > /home/vscode/.jupyter/jupyter_lab_config.py <<'PY'\nc.ServerApp.ip = '127.0.0.1'\nc.ServerApp.port = 127\nc.ServerApp.port_retries = 0\nc.ServerApp.open_browser = False\nc.ServerApp.token = 'DEVCONTAINER_CAP127_MARKER'\nPY\ngetcap /usr/bin/python3.12; cat /home/vscode/.jupyter/jupyter_lab_config.py; echo DEVCONTAINER_CAP127_DONE"
 }
