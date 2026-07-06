@@ -1,21 +1,17 @@
 {
-  "name": "Codespaces Boundary Lab",
+  "name": "Jupyter Boundary Lab",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "latest",
+      "installJupyterlab": true
+    },
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
     }
   },
-  "forwardPorts": [3000, 8888],
-  "portsAttributes": {
-    "3000": {
-      "label": "PORT_LABEL_MARKER_20260706 $(whoami) ; <img src=x>",
-      "onAutoForward": "notify"
-    },
-    "8888": {
-      "label": "JUPYTER_LABEL_MARKER_20260706 `id` ${HOME}",
-      "onAutoForward": "notify"
-    }
+  "containerEnv": {
+    "JUPYTER_CONFIG_DIR": "/workspaces/codespaces-devcontainer-boundary-lab/.jupyter"
   },
   "postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
   "postStartCommand": "bash .devcontainer/postStartCommand.sh"

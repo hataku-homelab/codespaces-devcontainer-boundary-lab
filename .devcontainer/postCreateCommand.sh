@@ -1,30 +1,43 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mkdir -p reports
+echo "DEVCONTAINER_POSTCREATE_JUPYTER_BOUNDARY_MARKER_20260706"
 
-{
-  echo "DEVCONTAINER_POSTCREATE_MARKER_20260706"
-  echo "timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-  echo "whoami=$(whoami)"
-  echo "pwd=$(pwd)"
-  echo "hostname=$(hostname)"
-  echo "--- selected env var names only ---"
-  env | cut -d= -f1 | sort | grep -E 'GITHUB|CODESPACE|VSCODE|TOKEN|SECRET|SSH|GH' || true
-  echo "--- terminal escape marker display test ---"
-  printf 'TERMINAL_ESCAPE_MARKER_20260706\n'
-  printf '\033]0;CODESPACE_TITLE_MARKER_20260706\007\n'
-  printf '\033[31mCOLOR_MARKER_20260706\033[0m\n'
-} | tee reports/postCreate-evidence.txt
+cd /workspaces/codespaces-devcontainer-boundary-lab
 
-# Start a harmless web server for forwarded-port/label tests.
-cat > reports/index.html <<'HTML'
-<!doctype html>
-<html>
-  <head><title>Codespaces Boundary Lab</title></head>
-  <body>
-    <h1>PORT_SERVER_MARKER_20260706</h1>
-    <p>This is a harmless local Codespaces port-forwarding test page.</p>
-  </body>
-</html>
-HTML
+mkdir -p .jupyter reports
+
+cat > .jupyter/jupyter_lab_config.py <<'PY'
+# Jupyter boundary config test.
+# Goal: see whether repo-controlled Jupyter config can influence the URL/port
+# returned to `gh codespace jupyter`.
+
+c.ServerApp.ip = '127.0.0.1'
+c.ServerApp.port = 127
+c.ServerApp.port_retries = 0
+c.ServerApp.open_browser = False
+c.ServerApp.token = 'TOKEN127MARKER'
+PY
+
+cat > reports/jupyter-boundary-config.txt <<'TXT'
+JUPYTER_BOUNDARY_CONFIG_MARKER_20260706
+
+Configured:
+- c.ServerApp.ip = '127.0.0.1'
+- c.ServerApp.port = 127
+- c.ServerApp.port_retries = 0
+- c.ServerApp.open_browser = False
+- c.ServerApp.token = 'TOKEN127MARKER'
+
+Goal:
+Check whether `gh codespace jupyter` returns/prints/opens a URL influenced by this config.
+TXT
+
+echo "=== Jupyter config written ==="
+cat .jupyter/jupyter_lab_config.py
+
+echo "=== Python/Jupyter availability ==="
+which python3 || true
+python3 --version || true
+which jupyter || true
+jupyter --version || true
