@@ -1,14 +1,4 @@
 {
-  "name": "Jupyter Boundary Lab Fast",
-  "image": "quay.io/jupyter/base-notebook:latest",
-  "features": {
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    }
-  },
-  "containerEnv": {
-    "JUPYTER_CONFIG_DIR": "/workspaces/codespaces-devcontainer-boundary-lab/.jupyter"
-  },
-  "postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
-  "postStartCommand": "bash .devcontainer/postStartCommand.sh"
+  "name": "Jupyter Manual Boundary Lab",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu"
 }
