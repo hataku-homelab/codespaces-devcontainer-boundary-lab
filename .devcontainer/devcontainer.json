@@ -1,6 +1,11 @@
 {
   "name": "Codespaces Boundary Lab",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  },
   "forwardPorts": [3000, 8888],
   "portsAttributes": {
     "3000": {
