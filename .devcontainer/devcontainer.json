@@ -1,11 +1,7 @@
 {
-  "name": "Jupyter Boundary Lab",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "name": "Jupyter Boundary Lab Fast",
+  "image": "quay.io/jupyter/base-notebook:latest",
   "features": {
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "latest",
-      "installJupyterlab": true
-    },
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
     }

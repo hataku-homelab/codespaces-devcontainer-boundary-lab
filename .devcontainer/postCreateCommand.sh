@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "DEVCONTAINER_POSTCREATE_JUPYTER_BOUNDARY_MARKER_20260706"
+echo "DEVCONTAINER_POSTCREATE_JUPYTER_FAST_MARKER_20260706"
 
-cd /workspaces/codespaces-devcontainer-boundary-lab
+REPO_DIR="/workspaces/codespaces-devcontainer-boundary-lab"
+cd "$REPO_DIR"
 
 mkdir -p .jupyter reports
 
@@ -33,6 +34,10 @@ Goal:
 Check whether `gh codespace jupyter` returns/prints/opens a URL influenced by this config.
 TXT
 
+echo "=== whoami/pwd ==="
+whoami || true
+pwd || true
+
 echo "=== Jupyter config written ==="
 cat .jupyter/jupyter_lab_config.py
 
@@ -41,3 +46,5 @@ which python3 || true
 python3 --version || true
 which jupyter || true
 jupyter --version || true
+which jupyter-lab || true
+jupyter-lab --version || true
